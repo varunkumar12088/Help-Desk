@@ -1,0 +1,22 @@
+server.port: 9090
+database.name: HELP_DESK
+safe.guard: games
+spring:
+  application.name: Help-Desk
+  ai.openai.api-key: dummy-key
+
+ai:
+  openAI:
+    baseUrl: http://13.232.210.112
+    modelName: "gpt-oss:20B"
+    apiKey: dummy
+    temperature: 0.7
+    topP: 0.3
+    maxTokens: 200
+  deepseek:
+    baseUrl: http://13.232.210.112
+    modelName: "gpt-oss:20B"
+    apiKey: dummy
+    temperature: 0.7
+    topP: 0.3
+    maxTokens: 200
