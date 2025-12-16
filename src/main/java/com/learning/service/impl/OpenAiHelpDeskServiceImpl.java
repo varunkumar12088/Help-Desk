@@ -1,5 +1,6 @@
 package com.learning.service.impl;
 
+import com.learning.record.ChatKey;
 import com.learning.service.HelpDeskService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -22,12 +23,12 @@ public class OpenAiHelpDeskServiceImpl implements HelpDeskService {
 
     @Override
     public Flux<String> chat(String message, String conversionId, String userId) {
-
+        String conversationKey = ChatKey.of(userId, conversionId);
         return this.chatClient
                 .prompt()
            //     .system(systemPromptResource)
                 .user(message)
-                .advisors( a -> a.param(ChatMemory.CONVERSATION_ID, conversionId))
+                .advisors( a -> a.param(ChatMemory.CONVERSATION_ID, conversationKey))
                 .stream().content();
     }
 }

@@ -24,6 +24,7 @@ public class Convertor {
         return "";
     }
 
+
     private static boolean isAnyTypeOf(Object object, Class<?>... types) {
         for (Class<?> type : types) {
             if(type.isInstance(object)){

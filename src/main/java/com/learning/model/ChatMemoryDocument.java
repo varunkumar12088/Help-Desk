@@ -10,13 +10,14 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@Document(collation = "chat_memory")
+@Document(collection = "chat_memory")
 @Builder
 public class ChatMemoryDocument {
 
     @Id
     private String id;
+    private String userId;
     private String conversationId;
-    private Message message;
+    private ChatMessage message;
     private Instant timestamp;
 }
