@@ -4,8 +4,12 @@ import com.learning.properties.AiProperties;
 import com.learning.utils.Convertor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.ChatMemoryRepository;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.api.OpenAiApi;
@@ -25,7 +29,7 @@ public class AIConfig {
     private List<String> safeGuard;
 
     @Bean("openAIChatClient")
-    public ChatClient chatClientOpenAI() {
+    public ChatClient chatClientOpenAI(ChatMemory chatMemory) {
         System.out.println(Convertor.convertObjectToString(this.aiProperties));
         return ChatClient.builder(
                         OpenAiChatModel.builder()
@@ -36,7 +40,9 @@ public class AIConfig {
                                 .build()
                 )
                 .defaultAdvisors(new SimpleLoggerAdvisor(),
-                        new SafeGuardAdvisor(safeGuard))
+                        new SafeGuardAdvisor(safeGuard),
+                        MessageChatMemoryAdvisor.builder(chatMemory)
+                                .build())
                 .defaultOptions(ChatOptions.builder()
                         .model(aiProperties.openAI().modelName())
                         .temperature(aiProperties.openAI().temperature())
@@ -48,7 +54,7 @@ public class AIConfig {
     }
 
     @Bean("deepseekChatClient")
-    public ChatClient chatClientDeepseek() {
+    public ChatClient chatClientDeepseek(ChatMemory chatMemory) {
         System.out.println(Convertor.convertObjectToString(this.aiProperties));
         return ChatClient.builder(
                 OpenAiChatModel.builder()
@@ -59,7 +65,9 @@ public class AIConfig {
                         .build()
                 )
                 .defaultAdvisors(new SimpleLoggerAdvisor(),
-                        new SafeGuardAdvisor(safeGuard))
+                        new SafeGuardAdvisor(safeGuard),
+                        MessageChatMemoryAdvisor.builder(chatMemory)
+                                .build())
                 .defaultOptions(ChatOptions.builder()
                         .model(aiProperties.deepseek().modelName())
                         .temperature(aiProperties.deepseek().temperature())
@@ -67,6 +75,14 @@ public class AIConfig {
                         .maxTokens(aiProperties.deepseek().maxTokens())
                         .build())
                 .defaultTools()
+                .build();
+    }
+
+    @Bean
+    public ChatMemory chatMemory(ChatMemoryRepository repository) {
+        return MessageWindowChatMemory.builder()
+                .chatMemoryRepository(repository)
+                .maxMessages(10)
                 .build();
     }
 

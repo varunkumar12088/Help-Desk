@@ -5,6 +5,13 @@ spring:
   application.name: Help-Desk
   ai.openai.api-key: dummy-key
 
+logging:
+  level:
+    org.springframework.ai:
+      autoconfigure: DEBUG
+      chat.client.advisor: DEBUG
+
+
 ai:
   openAI:
     baseUrl: http://13.232.210.112
@@ -12,11 +19,11 @@ ai:
     apiKey: dummy
     temperature: 0.7
     topP: 0.3
-    maxTokens: 200
+    maxTokens: 500
   deepseek:
     baseUrl: http://13.232.210.112
     modelName: "gpt-oss:20B"
     apiKey: dummy
     temperature: 0.7
     topP: 0.3
-    maxTokens: 200
+    maxTokens: 500
