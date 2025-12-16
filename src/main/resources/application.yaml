@@ -13,6 +13,7 @@ logging:
 
 
 ai:
+  maxMessages: 10
   openAI:
     baseUrl: http://13.232.210.112
     modelName: "gpt-oss:20B"

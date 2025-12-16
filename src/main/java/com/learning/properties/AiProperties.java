@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("ai")
 public record AiProperties(
+    Integer maxMessages,
     OpenAI openAI,
     Deepseek deepseek
 

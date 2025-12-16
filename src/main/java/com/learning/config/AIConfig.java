@@ -2,6 +2,7 @@ package com.learning.config;
 
 import com.learning.memory.HelpDeskChatMemory;
 import com.learning.properties.AiProperties;
+import com.learning.repository.HelpDeskChatMemoryRepository;
 import com.learning.utils.Convertor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
@@ -73,6 +74,14 @@ public class AIConfig {
                         .maxTokens(aiProperties.deepseek().maxTokens())
                         .build())
                 .defaultTools()
+                .build();
+    }
+
+    @Bean
+    public HelpDeskChatMemory helpDeskChatMemory(HelpDeskChatMemoryRepository memoryRepository){
+        return HelpDeskChatMemory.builder()
+                .chatMemoryRepository(memoryRepository)
+                .maxMessages(aiProperties.maxMessages())
                 .build();
     }
 
