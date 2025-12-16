@@ -15,25 +15,18 @@ import reactor.core.publisher.Flux;
 import java.util.Set;
 
 @Service
-public class OpenAiHelpDeskServiceImpl implements HelpDeskService {
+public class DeepseekHelpDeskServiceImpl implements HelpDeskService {
 
     @Autowired
-    @Qualifier("openAIChatClient")
-    private ChatClient  chatClient;
+    @Qualifier("deepseekChatClient")
+    private ChatClient chatClient;
 
     @Value("classpath:/helpdesk-system.st")
     private Resource systemPromptResource;
 
-    @Value("classpath:/helpdesk-user.st")
-    private Resource userPromptResource;
-
-
     @Override
     public Set<ServiceType> supportedTypes() {
-        return Set.of(ServiceType.GPT,
-                ServiceType.OPEN_AI,
-                ServiceType.CHAT_GPT
-                );
+        return Set.of(ServiceType.DEEPSEEK);
     }
 
     @Override
@@ -41,12 +34,10 @@ public class OpenAiHelpDeskServiceImpl implements HelpDeskService {
         String conversationKey = ChatKey.of(userId, conversionId);
         return this.chatClient
                 .prompt()
-                .system(systemPromptResource)
-                .user(user -> user.text(this.userPromptResource)
-                        .param("userId", userId)
-                        .param("query", message)
-                )
+                //     .system(systemPromptResource)
+                .user(message)
                 .advisors( a -> a.param(ChatMemory.CONVERSATION_ID, conversationKey))
                 .stream().content();
     }
 }
+

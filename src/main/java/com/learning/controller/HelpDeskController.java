@@ -16,9 +16,7 @@ public class HelpDeskController {
     private AIServiceResolver aiServiceResolver;
 
     @PostMapping(value = "")
-    public Flux<String> chat(@RequestBody ChatRequest chatRequest,
-                             @RequestHeader("conversionId") String conversionId,
-                             @RequestHeader("userId") String userId) {
+    public Flux<String> chat(@RequestBody ChatRequest chatRequest) {
         ServiceType serviceType = chatRequest.getServiceType() != null ?
                 chatRequest.getServiceType() : ServiceType.OPEN_AI;
         return aiServiceResolver.resolve(serviceType.getValue())

@@ -32,10 +32,8 @@ Core Responsibilities:
      Description[description]- generate this field based on user input.
      Priority[priority] (LOW, MEDIUM, HIGH,URGENT)- decide this field based on user input.
      category[category]- decide this field based on user input.
-     Status[status] (  OPEN, CLOSED, RESOLVED)
-     Created Date and Time[createdOn]
-     Updated date and time[updatedOn]
-     email[very important --- must be taken from__ user. ask email from user if not given. ]
+     Status[status] (OPEN, IN_PROGRESS, BLOCKED, CLOSED)
+     userId[very important --- must be taken from__ user. ask userId from user if not given. ]
 
    - Confirm ticket creation and summarize the issue for the user.
 4. Update Existing Tickets
