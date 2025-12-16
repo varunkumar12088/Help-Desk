@@ -1,5 +1,8 @@
 package com.learning.controller;
 
+import com.learning.constant.ServiceType;
+import com.learning.dto.ChatRequest;
+import com.learning.resolver.AIServiceResolver;
 import com.learning.service.HelpDeskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +13,15 @@ import reactor.core.publisher.Flux;
 public class HelpDeskController {
 
     @Autowired
-    private HelpDeskService helpDeskService;
+    private AIServiceResolver aiServiceResolver;
 
     @PostMapping(value = "")
-    public Flux<String> chat(@RequestBody String message,
+    public Flux<String> chat(@RequestBody ChatRequest chatRequest,
                              @RequestHeader("conversionId") String conversionId,
                              @RequestHeader("userId") String userId) {
-        return helpDeskService.chat(message, conversionId, userId);
+        ServiceType serviceType = chatRequest.getServiceType() != null ?
+                chatRequest.getServiceType() : ServiceType.OPEN_AI;
+        return aiServiceResolver.resolve(serviceType.getValue())
+                .chat(chatRequest.getMessage(), chatRequest.getConversionId(), chatRequest.getUserId());
     }
 }
