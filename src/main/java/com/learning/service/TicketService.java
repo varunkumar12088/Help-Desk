@@ -12,5 +12,5 @@ public interface TicketService {
 
     Ticket getById(Long id);
 
-    List<Ticket> getByUserId(Long userId);
+    List<Ticket> getByUserId(String userId);
 }

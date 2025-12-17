@@ -14,8 +14,9 @@ public class UserTool implements HelpDeskTool {
     @Autowired
     private UserService userService;
 
-    @Tool(description = "This tool help you to fetch/get user from database based on userId")
-    public User getUser(@ToolParam(description = "UserId field is required to fetch/get user") String userId){
+    @Tool(description = "This tool help you to get user from database based on userId")
+    public User getUser(@ToolParam(description = "UserId whose user is required") String userId){
+        System.out.println("Tool is calling get user method in UserTool");
         return userService.getById(userId);
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends MongoRepository<Ticket, Long> {
 
-    List<Ticket> findByUserId(Long userId);
+    List<Ticket> findByUserId(String userId);
 }

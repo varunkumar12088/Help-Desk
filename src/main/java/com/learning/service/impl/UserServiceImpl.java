@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         validate(user);
-        user.setId(String.valueOf(System.currentTimeMillis()));
+        user.setId(generateUserId());
         userRepository.save(user);
     }
 
@@ -58,5 +59,10 @@ public class UserServiceImpl implements UserService {
         if(optionalUser.isPresent()) {
             throw new IllegalArgumentException("User email already exists");
         }
+    }
+
+    private String generateUserId(){
+        int randomNum = ThreadLocalRandom.current().nextInt(1000, 9999);
+        return "U-" + randomNum;
     }
 }

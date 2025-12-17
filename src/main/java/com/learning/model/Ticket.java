@@ -19,12 +19,12 @@ import java.io.Serializable;
 public class Ticket implements Serializable {
 
     @Id
-    private Long id;
+    private String ticketId;
+    private String userId;
     private String summary;
+    private String description;
     private Priority priority;
     private String category;
-    private String description;
-    private String userId;
     private Status status;
 
 }

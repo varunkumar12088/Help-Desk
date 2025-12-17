@@ -7,9 +7,10 @@ spring:
 
 logging:
   level:
-    org.springframework.ai:
-      autoconfigure: DEBUG
-      chat.client.advisor: DEBUG
+    org.springframework:
+    ai: DEBUG
+    ai.autoconfigure: DEBUG
+    ai.chat.client.advisor: ERROR
 
 
 ai:

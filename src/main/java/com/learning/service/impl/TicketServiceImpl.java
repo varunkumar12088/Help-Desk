@@ -7,7 +7,9 @@ import com.learning.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -17,7 +19,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void createTicket(Ticket ticket) {
-        ticket.setId(System.currentTimeMillis());
+        ticket.setTicketId(generateTicketId());
         ticket.setStatus(Status.OPEN);
         ticketRepository.save(ticket);
     }
@@ -34,7 +36,13 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<Ticket> getByUserId(Long userId) {
-        return List.of();
+    public List<Ticket> getByUserId(String userId) {
+        return ticketRepository.findByUserId(userId);
+    }
+
+    public String generateTicketId() {
+        String year = String.valueOf(Year.now().getValue());
+        int randomNum = ThreadLocalRandom.current().nextInt(1000, 9999); // 4-digit random number
+        return "T-" + year + "-" + randomNum;
     }
 }
