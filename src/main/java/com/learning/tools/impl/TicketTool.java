@@ -1,7 +1,8 @@
-package com.learning.tools;
+package com.learning.tools.impl;
 
 import com.learning.model.Ticket;
 import com.learning.service.TicketService;
+import com.learning.tools.HelpDeskTool;
 import com.learning.utils.Convertor;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TicketTool {
+public class TicketTool implements HelpDeskTool {
 
     @Autowired
     private TicketService ticketService;

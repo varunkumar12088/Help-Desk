@@ -38,15 +38,20 @@ public class OpenAiHelpDeskServiceImpl implements HelpDeskService {
 
     @Override
     public Flux<String> chat(String message, String conversionId, String userId) {
-        String conversationKey = ChatKey.of(userId, conversionId);
-        return this.chatClient
-                .prompt()
-                .system(systemPromptResource)
-                .user(user -> user.text(this.userPromptResource)
-                        .param("userId", userId)
-                        .param("query", message)
-                )
-                .advisors( a -> a.param(ChatMemory.CONVERSATION_ID, conversationKey))
-                .stream().content();
+        try {
+            String conversationKey = ChatKey.of(userId, conversionId);
+            return this.chatClient
+                    .prompt()
+                    .system(systemPromptResource)
+                    .user(user -> user.text(this.userPromptResource)
+                            .param("userId", userId)
+                            .param("query", message)
+                    )
+                    .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationKey))
+                    .stream().content();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Flux.error(e);
+        }
     }
 }

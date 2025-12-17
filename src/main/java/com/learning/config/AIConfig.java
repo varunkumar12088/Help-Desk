@@ -3,7 +3,10 @@ package com.learning.config;
 import com.learning.memory.HelpDeskChatMemory;
 import com.learning.properties.AiProperties;
 import com.learning.repository.HelpDeskChatMemoryRepository;
-import com.learning.tools.TicketTool;
+import com.learning.tools.HelpDeskTool;
+import com.learning.tools.impl.EmailTool;
+import com.learning.tools.impl.TicketTool;
+import com.learning.tools.impl.UserTool;
 import com.learning.utils.Convertor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
@@ -24,7 +27,7 @@ import java.util.List;
 public class AIConfig {
 
     private final AiProperties aiProperties;
-    private final TicketTool  ticketTool;
+    private final List<HelpDeskTool>  helpDeskTools;
 
     @Value("${safe.guard}")
     private List<String> safeGuard;
@@ -52,7 +55,7 @@ public class AIConfig {
                         .build())
                 .defaultTools()
                 //tools
-                .defaultTools(ticketTool)
+                .defaultTools(helpDeskTools)
                 .build();
     }
 
@@ -79,7 +82,7 @@ public class AIConfig {
                         .build())
                 .defaultTools()
                 //Tools
-                .defaultTools(ticketTool)
+                .defaultTools(helpDeskTools)
                 .build();
     }
 

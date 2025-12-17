@@ -15,14 +15,14 @@ logging:
 ai:
   maxMessages: 10
   openAI:
-    baseUrl: http://13.232.210.112
+    baseUrl: http://3.110.37.196
     modelName: "gpt-oss:20B"
     apiKey: dummy
     temperature: 0.7
     topP: 0.3
     maxTokens: 500
   deepseek:
-    baseUrl: http://13.232.210.112
+    baseUrl: http://3.110.37.196
     modelName: "gpt-oss:20B"
     apiKey: dummy
     temperature: 0.7
