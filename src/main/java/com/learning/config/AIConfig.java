@@ -3,6 +3,7 @@ package com.learning.config;
 import com.learning.memory.HelpDeskChatMemory;
 import com.learning.properties.AiProperties;
 import com.learning.repository.HelpDeskChatMemoryRepository;
+import com.learning.tools.HelpDeskTool;
 import com.learning.tools.impl.EmailTool;
 import com.learning.tools.impl.TicketTool;
 import com.learning.tools.impl.UserTool;
@@ -26,9 +27,7 @@ import java.util.List;
 public class AIConfig {
 
     private final AiProperties aiProperties;
-    private final TicketTool  ticketTool;
-    private final UserTool userTool;
-    private final EmailTool emailTool;
+    private final List<HelpDeskTool> helpDeskTools;
 
     @Value("${safe.guard}")
     private List<String> safeGuard;
@@ -56,7 +55,7 @@ public class AIConfig {
                         .build())
                 .defaultTools()
                 //tools
-                .defaultTools(ticketTool, userTool, emailTool)
+                .defaultTools(helpDeskTools.toArray())
                 .build();
     }
 
@@ -83,7 +82,7 @@ public class AIConfig {
                         .build())
                 .defaultTools()
                 //Tools
-                .defaultTools(ticketTool, userTool, emailTool)
+                .defaultTools(helpDeskTools.toArray())
                 .build();
     }
 
